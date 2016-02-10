@@ -23,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         progressBar = (CircleProgressBar)findViewById(R.id.custom_progressBar);
         progressAnimator = ObjectAnimator.ofFloat(progressBar, "progress", 0.0f, 100.0f);
-        progressAnimator.setDuration(1000);
+        progressAnimator.setDuration(1200);
 
         ImageButton imageButton = (ImageButton)findViewById(R.id.imageButton);
         imageButton.setOnTouchListener(new View.OnTouchListener() {
