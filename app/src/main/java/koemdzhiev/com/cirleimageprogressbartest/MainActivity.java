@@ -1,26 +1,19 @@
 package koemdzhiev.com.cirleimageprogressbartest;
 
 import android.animation.ObjectAnimator;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.SystemClock;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.widget.ImageButton;
-import android.widget.ProgressBar;
-import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
     public CircleProgressBar progressBar;
     private static final String TAG = MainActivity.class.getSimpleName();
-    private BackgroundAsyncTask backgroundAsyncTask;
+
+    private ObjectAnimator progressAnimator;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,8 +22,8 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         progressBar = (CircleProgressBar)findViewById(R.id.custom_progressBar);
-
-        backgroundAsyncTask = new BackgroundAsyncTask();
+        progressAnimator = ObjectAnimator.ofFloat(progressBar, "progress", 0.0f, 100.0f);
+        progressAnimator.setDuration(1000);
 
         ImageButton imageButton = (ImageButton)findViewById(R.id.imageButton);
         imageButton.setOnTouchListener(new View.OnTouchListener() {
@@ -38,22 +31,12 @@ public class MainActivity extends AppCompatActivity {
             public boolean onTouch(View v, MotionEvent event) {
                 if (event.getAction() == MotionEvent.ACTION_DOWN) {
 
-                    if (!backgroundAsyncTask.isCancelled()) {
-                        backgroundAsyncTask.execute();
-                        Log.d(TAG, "task executed");
-                    }else {
-                        backgroundAsyncTask.cancel(true);
-                        progressBar.setProgress(0);
-                    }
-
-
-//                    Toast.makeText(MainActivity.this, "onTouch", Toast.LENGTH_LONG).show();
+                    progressAnimator.start();
+                    Log.d(TAG, "task executed");
                 }
 
                 if (event.getAction() == MotionEvent.ACTION_UP) {
-                    backgroundAsyncTask.cancel(true);
-                    progressBar.setProgress(0);
-                    backgroundAsyncTask = new BackgroundAsyncTask();
+                    progressAnimator.cancel();
                     Log.d(TAG, "task canceled");
                 }
 
@@ -64,41 +47,4 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public class BackgroundAsyncTask extends
-            AsyncTask<Void, Integer, Void> {
-
-        int myProgress;
-
-        @Override
-        protected void onPostExecute(Void result) {
-            // TODO Auto-generated method stub
-            progressBar.setProgress(0);
-            Log.d(TAG, "onPostExecure. setProgres to 0");
-        }
-
-        @Override
-        protected void onPreExecute() {
-            // TODO Auto-generated method stub
-//            Toast.makeText(MainActivity.this, "onPreExecute", Toast.LENGTH_LONG).show();
-            myProgress = 0;
-        }
-
-        @Override
-        protected Void doInBackground(Void... params) {
-            // TODO Auto-generated method stub
-            while(myProgress<100){
-                myProgress+=2.8;
-                publishProgress(myProgress);
-                SystemClock.sleep(1);
-            }
-            return null;
-        }
-
-        @Override
-        protected void onProgressUpdate(Integer... values) {
-            // TODO Auto-generated method stub
-            progressBar.setProgress(values[0]);
-        }
-
-    }
 }
