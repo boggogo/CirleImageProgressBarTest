@@ -1,5 +1,6 @@
 package koemdzhiev.com.cirleimageprogressbartest;
 
+import android.animation.Animator;
 import android.animation.ObjectAnimator;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -23,6 +24,19 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         progressBar = (CircleProgressBar)findViewById(R.id.custom_progressBar);
         progressAnimator = ObjectAnimator.ofFloat(progressBar, "progress", 0.0f, 100.0f);
+        progressAnimator.addListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animator) {}
+            @Override
+            public void onAnimationEnd(Animator animator) {
+                Log.d(TAG,"onAnimationEnd");
+                progressBar.setProgress(0);
+            }
+            @Override
+            public void onAnimationCancel(Animator animator) {}
+            @Override
+            public void onAnimationRepeat(Animator animator) {}
+        });
         progressAnimator.setDuration(1200);
 
         ImageButton imageButton = (ImageButton)findViewById(R.id.imageButton);
