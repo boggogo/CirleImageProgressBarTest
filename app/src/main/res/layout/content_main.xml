@@ -24,6 +24,27 @@
         android:src="@drawable/perfecftcircle"
         android:visibility="visible"/>
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Sins going out: "
+        android:textColor="@android:color/white"
+        android:id="@+id/textView"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="0"
+        android:id="@+id/textView2"
+        android:layout_below="@id/textView"
+        android:layout_marginTop="18dp"
+        android:textColor="@android:color/white"
+        android:layout_alignTop="@+id/textView"
+        android:layout_centerHorizontal="true"/>
 
     <koemdzhiev.com.cirleimageprogressbartest.CircleProgressBar
         android:id="@+id/custom_progressBar"
@@ -38,6 +59,14 @@
         android:layout_alignRight="@+id/imageButton"
         android:layout_alignEnd="@+id/imageButton" />
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Increment Sins"
+        android:id="@+id/button"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="46dp"/>
 
 
 </RelativeLayout>

@@ -8,9 +8,15 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
+    private TextView mNumSins;
+    private Button addSins;
+    private int numberOfSins = 0;
+
     public CircleProgressBar progressBar;
     private static final String TAG = MainActivity.class.getSimpleName();
 
@@ -22,6 +28,15 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        mNumSins = (TextView)findViewById(R.id.textView2);
+        addSins = (Button)findViewById(R.id.button);
+        addSins.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                numberOfSins++;
+            }
+        });
+
         progressBar = (CircleProgressBar)findViewById(R.id.custom_progressBar);
         progressAnimator = ObjectAnimator.ofFloat(progressBar, "progress", 0.0f, 100.0f);
         progressAnimator.addListener(new Animator.AnimatorListener() {
@@ -31,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
             public void onAnimationEnd(Animator animator) {
                 Log.d(TAG,"onAnimationEnd");
                 progressBar.setProgress(0);
+                mNumSins.setText(numberOfSins+"");
             }
             @Override
             public void onAnimationCancel(Animator animator) {}
@@ -44,7 +60,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 if (event.getAction() == MotionEvent.ACTION_DOWN) {
-
                     progressAnimator.start();
                     Log.d(TAG, "task executed");
                 }
